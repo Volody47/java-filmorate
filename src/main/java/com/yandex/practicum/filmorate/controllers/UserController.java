@@ -41,6 +41,14 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public User createUser(@RequestBody User user) {
+        validate(user);
+        user.setId(generateId());
+        users.put(user.getId(), user);
+        log.debug("New user created with id={}", user.getId());
+        return user;
+    }
+
+    private void validate(@RequestBody User user) {
         if(user.getEmail() == null || user.getEmail().isBlank() || !user.getEmail().contains("@")) {
             log.error("Email: '{}' can't be empty and should contains @", user.getEmail());
             throw new InvalidEmailException("Email can't be empty and should contains @.");
@@ -53,28 +61,13 @@ public class UserController {
         } else if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-        user.setId(generateId());
-        users.put(user.getId(), user);
-        log.debug("New user created with id={}", user.getId());
-        return user;
     }
 
     @PutMapping(value = "/users")
     public User updateUser(@RequestBody User user) {
         for (Integer userId : users.keySet()) {
             if (userId.equals(user.getId())) {
-                if(user.getEmail() == null || user.getEmail().isBlank() || !user.getEmail().contains("@")) {
-                    log.error("Email: '{}' can't be empty and should contains @", user.getEmail());
-                    throw new InvalidEmailException("Email can't be empty and should contains @.");
-                } else if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
-                    log.error("Login field: '{}' can't be empty or contain space.", user.getLogin());
-                    throw new InvalidLoginException("Login can't be empty or contain space.");
-                } else if (user.getBirthday().isAfter(LocalDate.now())) {
-                    log.error("Birthday: '{}' can't be in the future", user.getBirthday());
-                    throw new InvalidBirthdayException("Birthday can't be in the future.");
-                } else if (user.getName() == null || user.getName().isBlank()) {
-                    user.setName(user.getLogin());
-                }
+                validate(user);
                 int id = user.getId();
                 users.put(id, user);
                 log.debug("User with id={} updated", user.getId());

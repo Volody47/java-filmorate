@@ -38,6 +38,14 @@ public class FilmController {
 
     @PostMapping(value = "/films")
     public Film addFilm(@RequestBody Film film) {
+        validate(film);
+        film.setId(generateId());
+        films.put(film.getId(), film);
+        log.debug("New film added with id={}", film.getId());
+        return film;
+    }
+
+    private void validate(@RequestBody Film film) {
         if(film.getName() == null || film.getName().isBlank()) {
             log.error("Film name: '{}' can't be empty.", film.getName());
             throw new InvalidFilmNameException("Film name can't be empty.");
@@ -51,29 +59,13 @@ public class FilmController {
             log.error("Duration value: '{}' should be more then 0.", film.getDuration());
             throw new InvalidDurationException("Duration should be positive value.");
         }
-        film.setId(generateId());
-        films.put(film.getId(), film);
-        log.debug("New film added with id={}", film.getId());
-        return film;
     }
 
     @PutMapping(value = "/films")
     public Film updateFilm(@RequestBody Film film) {
         for (Integer filmId : films.keySet()) {
             if (filmId.equals(film.getId())) {
-                if(film.getName() == null || film.getName().isBlank()) {
-                    log.error("Film name: '{}' can't be empty.", film.getName());
-                    throw new InvalidFilmNameException("Film name can't be empty.");
-                } else if (film.getDescription().length() > 200) {
-                    log.error("Description field accept max 200 characters.");
-                    throw new DescriptionLengthException("Description field accept max 200 characters.");
-                } else if (film.getReleaseDate().isBefore(LocalDate.of(1895,12, 28))) {
-                    log.error("Release date: '{}' can't be before 1895-12-28.", film.getReleaseDate());
-                    throw new InvalidReleaseDateException("Release can't be before 1895-12-28.");
-                } else if (film.getDuration() < 0) {
-                    log.error("Duration value: '{}' should be more then 0.", film.getDuration());
-                    throw new InvalidDurationException("Duration should be positive value.");
-                }
+                validate(film);
                 int id = film.getId();
                 films.put(id, film);
                 log.debug("Film with id={} updated", film.getId());
