@@ -1,8 +1,11 @@
 package com.yandex.practicum.filmorate.controllers;
 
+import com.yandex.practicum.filmorate.exceptions.*;
 import com.yandex.practicum.filmorate.model.Film;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.module.InvalidModuleDescriptorException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +36,15 @@ public class FilmController {
 
     @PostMapping(value = "/films")
     public Film addFilm(@RequestBody Film film) {
+        if(film.getName() == null || film.getName().isBlank()) {
+            throw new InvalidFilmNameException("Film name can't be empty.");
+        } else if (film.getDescription().length() > 200) {
+            throw new DescriptionLengthException("Description field accept max 200 characters.");
+        } else if (film.getReleaseDate().isBefore(LocalDate.of(1895,12, 28))) {
+            throw new InvalidReleaseDateException("Release can't be before 12/28/1895.");
+        } else if (film.getDuration() < 0) {
+            throw new InvalidDurationException("Duration should be positive value.");
+        }
         film.setId(generateId());
         films.put(film.getId(), film);
         return film;
@@ -40,8 +52,22 @@ public class FilmController {
 
     @PutMapping(value = "/films")
     public Film updateFilm(@RequestBody Film film) {
-        int id = film.getId();
-        films.put(id, film);
-        return film;
+        for (Integer filmId : films.keySet()) {
+            if (filmId.equals(film.getId())) {
+                if(film.getName() == null || film.getName().isBlank()) {
+                    throw new InvalidFilmNameException("Film name can't be empty.");
+                } else if (film.getDescription().length() > 200) {
+                    throw new DescriptionLengthException("Description field accept max 200 characters.");
+                } else if (film.getReleaseDate().isBefore(LocalDate.of(1895,12, 28))) {
+                    throw new InvalidReleaseDateException("Release can't be before 12/28/1895.");
+                } else if (film.getDuration() < 0) {
+                    throw new InvalidDurationException("Duration should be positive value.");
+                }
+                int id = film.getId();
+                films.put(id, film);
+                return film;
+            }
+        }
+        throw new UnknownFilmException("Unknown film.");
     }
 }
