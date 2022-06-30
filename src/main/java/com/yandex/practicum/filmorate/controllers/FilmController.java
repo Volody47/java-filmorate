@@ -32,14 +32,14 @@ public class FilmController {
 
 
     @PostMapping(value = "/films")
-    public Film createUser(@RequestBody Film film) {
+    public Film addFilm(@RequestBody Film film) {
         film.setId(generateId());
         films.put(film.getId(), film);
         return film;
     }
 
     @PutMapping(value = "/films")
-    public Film updateUser(@RequestBody Film film) {
+    public Film updateFilm(@RequestBody Film film) {
         int id = film.getId();
         films.put(id, film);
         return film;
