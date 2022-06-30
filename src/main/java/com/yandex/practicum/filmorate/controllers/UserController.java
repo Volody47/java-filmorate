@@ -5,6 +5,7 @@ import com.yandex.practicum.filmorate.exceptions.InvalidEmailException;
 import com.yandex.practicum.filmorate.exceptions.InvalidLoginException;
 import com.yandex.practicum.filmorate.exceptions.UnknownUserException;
 import com.yandex.practicum.filmorate.model.User;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,7 @@ public class UserController {
         return user;
     }
 
-    private void validate(@RequestBody User user) {
+    public void validate(@RequestBody User user) {
         if(user.getEmail() == null || user.getEmail().isBlank() || !user.getEmail().contains("@")) {
             log.error("Email: '{}' can't be empty and should contains @", user.getEmail());
             throw new InvalidEmailException("Email can't be empty and should contains @.");
