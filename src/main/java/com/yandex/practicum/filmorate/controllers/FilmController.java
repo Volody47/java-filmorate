@@ -45,7 +45,7 @@ public class FilmController {
         return film;
     }
 
-    private void validate(@RequestBody Film film) {
+    public void validate(@RequestBody Film film) {
         if(film.getName() == null || film.getName().isBlank()) {
             log.error("Film name: '{}' can't be empty.", film.getName());
             throw new InvalidFilmNameException("Film name can't be empty.");
