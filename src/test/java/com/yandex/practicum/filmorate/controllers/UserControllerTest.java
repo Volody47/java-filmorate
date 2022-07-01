@@ -9,35 +9,33 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static com.yandex.practicum.filmorate.utils.Validator.validateUser;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserControllerTest {
 
     @Test
     void validateEmail() {
-        UserController userController = new UserController();
         User user = new User();
         user.setEmail("");
-        assertThrows(InvalidEmailException.class, () -> userController.validate(user) );
+        assertThrows(InvalidEmailException.class, () -> validateUser(user) );
     }
 
     @Test
     void validateLogin() {
-        UserController userController = new UserController();
         User user = new User();
         user.setEmail("mail@mail.ru");
         user.setLogin("dolore ullamco");
-        assertThrows(InvalidLoginException.class, () -> userController.validate(user) );
+        assertThrows(InvalidLoginException.class, () -> validateUser(user) );
     }
 
     @Test
     void validateBirthday() {
-        UserController userController = new UserController();
         User user = new User();
         user.setEmail("mail@mail.ru");
         user.setLogin("dolore");
         user.setBirthday(LocalDate.MAX);
-        assertThrows(InvalidBirthdayException.class, () -> userController.validate(user) );
+        assertThrows(InvalidBirthdayException.class, () -> validateUser(user) );
     }
 
 }
