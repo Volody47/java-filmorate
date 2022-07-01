@@ -31,8 +31,8 @@ public class FilmController {
         for (Integer film : films.keySet()) {
             listOfFilms.add(films.get(film));
         }
+        log.debug("Films quantity: {}", listOfFilms.size());
         return listOfFilms;
-        //log.debug("Текущее количество постов: {}", posts.size());
     }
 
 
