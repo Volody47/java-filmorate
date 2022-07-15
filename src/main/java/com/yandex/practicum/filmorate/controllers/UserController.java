@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+/**
+ *
+ */
 @RestController
 @Slf4j
 public class UserController {
@@ -32,6 +34,13 @@ public class UserController {
     public User updateUser(@RequestBody User user) {
         log.debug("User with id={} updated", user.getId());
         return userService.updateUser(user);
+    }
+
+    @GetMapping(value = "/users/{id}")
+    public User getUser(@PathVariable int id) {
+
+        //log.debug("User with id={} updated", user.getId());
+        return userService.getUser(id);
     }
 }
 

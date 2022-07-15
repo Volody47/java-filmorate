@@ -1,6 +1,6 @@
 package com.yandex.practicum.filmorate.storage;
 
-import com.yandex.practicum.filmorate.exceptions.UnknownUserException;
+import com.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import com.yandex.practicum.filmorate.model.User;
 import org.springframework.stereotype.Component;
 
@@ -39,21 +39,31 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User updateUser(User user) {
+        User updatedUser = null;
         for (Integer userId : users.keySet()) {
             if (userId.equals(user.getId())) {
                 validateUser(user);
                 int id = user.getId();
-                users.put(id, user);
+                updatedUser = users.put(id, user);
                 //log.debug("User with id={} updated", user.getId());
-                return user;
             }
         }
         //log.error("Unknown user.");
-        throw new UnknownUserException("Unknown user.");
+        return updatedUser;
     }
 
     @Override
     public void remove(User user) {
         users.remove(user.getId());
+    }
+
+    public User getUser(int id) {
+        User user = null;
+        for (Integer userId : users.keySet()) {
+            if (userId == id) {
+                user = users.get(id);
+            }
+        }
+        return user;
     }
 }
