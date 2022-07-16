@@ -26,21 +26,37 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public User createUser(@RequestBody User user) {
-        log.debug("New user created with id={}", user.getId());
         return userService.createUser(user);
     }
 
     @PutMapping(value = "/users")
     public User updateUser(@RequestBody User user) {
-        log.debug("User with id={} updated", user.getId());
         return userService.updateUser(user);
     }
 
     @GetMapping(value = "/users/{id}")
     public User getUser(@PathVariable int id) {
-
-        //log.debug("User with id={} updated", user.getId());
         return userService.getUser(id);
+    }
+
+    @PutMapping(value = "/users/{userId}/friends/{friendId}")
+    public void addFriend(@PathVariable Integer userId, @PathVariable Integer friendId) {
+        userService.addFriend(userId, friendId);
+    }
+
+    @DeleteMapping(value = "/users/{userId}/friends/{friendId}")
+    public void removeFriend(@PathVariable Integer userId, @PathVariable Integer friendId) {
+        userService.removeFriend(userId, friendId);
+    }
+
+    @GetMapping(value = "/users/{id}/friends")
+    public List<User> getUserFriends(@PathVariable int id) {
+        return userService.getUserFriends(id);
+    }
+
+    @GetMapping(value = "/users/{userId}/friends/common/{otherId}")
+    public List<User> getCommonFriendsWitOtherUser(@PathVariable Integer userId, @PathVariable Integer otherId) {
+        return userService.getCommonFriendsWitOtherUser(userId, otherId);
     }
 }
 
