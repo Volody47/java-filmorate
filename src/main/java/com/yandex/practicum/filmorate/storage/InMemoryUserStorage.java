@@ -80,13 +80,13 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     public void addFriend(User user, User friend) {
-        user.getFriendIds().add(user.getId());
         user.getFriendIds().add(friend.getId());
+        friend.getFriendIds().add(user.getId());
     }
 
     public void removeFriend(User user, User friend) {
-        user.getFriendIds().remove(user.getId());
         user.getFriendIds().remove(friend.getId());
+        friend.getFriendIds().remove(user.getId());
     }
 
     public List<User> getCommonFriendsWitOtherUser(User user, User otherUser) {
