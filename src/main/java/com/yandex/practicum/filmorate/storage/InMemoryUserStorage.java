@@ -45,12 +45,11 @@ public class InMemoryUserStorage implements UserStorage {
         for (Integer userId : users.keySet()) {
             if (userId.equals(user.getId())) {
                 validateUser(user);
-                int id = user.getId();
-                updatedUser = users.put(id, user);
+                users.put(user.getId(), user);
+                updatedUser = users.get(user.getId());
                 log.debug("User with id={} updated", user.getId());
             }
         }
-        //log.error("Unknown user.");
         return updatedUser;
     }
 

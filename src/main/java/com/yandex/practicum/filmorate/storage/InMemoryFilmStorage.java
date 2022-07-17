@@ -1,13 +1,10 @@
 package com.yandex.practicum.filmorate.storage;
 
-import com.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import com.yandex.practicum.filmorate.model.Film;
-import com.yandex.practicum.filmorate.model.User;
-import com.yandex.practicum.filmorate.service.FilmService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +12,7 @@ import java.util.stream.Collectors;
 import static com.yandex.practicum.filmorate.utils.Validator.validateFilm;
 
 @Component
+@Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
     private HashMap<Integer, Film> films = new HashMap<>();
     private Integer identificator = 0;
@@ -32,7 +30,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         for (Integer film : films.keySet()) {
             listOfFilms.add(films.get(film));
         }
-        //log.debug("Films quantity: {}", listOfFilms.size());
+        log.debug("Films quantity: {}", listOfFilms.size());
         return listOfFilms;
     }
 
@@ -41,22 +39,22 @@ public class InMemoryFilmStorage implements FilmStorage {
         validateFilm(film);
         film.setId(generateId());
         films.put(film.getId(), film);
-        //log.debug("New film added with id={}", film.getId());
+        log.debug("New film added with id={}", film.getId());
         return film;
     }
 
     @Override
     public Film updateFilm(Film film) {
+        Film updatedFilm = null;
         for (Integer filmId : films.keySet()) {
             if (filmId.equals(film.getId())) {
                 validateFilm(film);
-                int id = film.getId();
-                films.put(id, film);
-                //log.debug("Film with id={} updated", film.getId());
-                return film;
+                films.put(film.getId(), film);
+                updatedFilm = films.get(film.getId());
+                log.debug("Film with id={} updated", film.getId());
             }
         }
-        throw new FilmNotFoundException("Unknown film.");
+        return updatedFilm;
     }
 
     @Override

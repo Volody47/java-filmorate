@@ -26,7 +26,11 @@ public class FilmService {
     }
 
     public Film updateFilm(Film film) {
-        return inMemoryFilmStorage.updateFilm(film);
+        Film updatedFilm = inMemoryFilmStorage.updateFilm(film);
+        if (updatedFilm == null) {
+            throw new FilmNotFoundException("Film with id=" + film.getId() + " not found.");
+        }
+        return updatedFilm;
     }
 
     public Film getFilm(int id) {
