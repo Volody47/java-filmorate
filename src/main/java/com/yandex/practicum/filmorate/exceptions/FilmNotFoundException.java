@@ -1,7 +1,7 @@
 package com.yandex.practicum.filmorate.exceptions;
 
-public class UnknownFilmException extends RuntimeException {
-    public UnknownFilmException(String s) {
+public class FilmNotFoundException extends RuntimeException {
+    public FilmNotFoundException(String s) {
         super(s);
     }
 }
