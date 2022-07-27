@@ -3,6 +3,7 @@ package com.yandex.practicum.filmorate.controllers;
 import com.yandex.practicum.filmorate.model.Film;
 import com.yandex.practicum.filmorate.model.User;
 import com.yandex.practicum.filmorate.service.FilmService;
+import com.yandex.practicum.filmorate.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,12 @@ import java.util.List;
 @RestController
 @Slf4j
 public class FilmController {
+    private final FilmService filmService;
 
     @Autowired
-    FilmService filmService;
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
+    }
 
     @GetMapping("/films")
     public List<Film> findAll() {

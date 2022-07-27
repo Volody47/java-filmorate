@@ -81,18 +81,15 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     public List<Film> getMostPopularFilms(Integer count) {
-        int size = 0;
         return films.values()
                 .stream()
                 .sorted((p0, p1) -> compare(p0, p1))
-                //.sorted(Comparator.comparing(Film::getName))
                 .limit(count)
                 .collect(Collectors.toList());
     }
 
     private int compare(Film p0, Film p1) {
-        int result = Integer.compare(p1.getUserWhoLikedIds().size(), p0.getUserWhoLikedIds().size()); //прямой порядок сортировки
-        //int result = p0.getUserWhoLikedIds().size().compareTo(p1.getUserWhoLikedIds().size()); //прямой порядок сортировки
+        int result = Integer.compare(p1.getUserWhoLikedIds().size(), p0.getUserWhoLikedIds().size());
         return result;
     }
 }

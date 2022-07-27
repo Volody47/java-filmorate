@@ -11,9 +11,12 @@ import java.util.List;
 
 @Service
 public class UserService {
+    private final InMemoryUserStorage userStorage;
 
     @Autowired
-    InMemoryUserStorage userStorage;
+    public UserService(InMemoryUserStorage userStorage) {
+        this.userStorage = userStorage;
+    }
 
     public List<User> findAll() {
         return userStorage.findAll();
