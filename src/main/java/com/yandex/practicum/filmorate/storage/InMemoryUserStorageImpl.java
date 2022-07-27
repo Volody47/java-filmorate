@@ -13,7 +13,7 @@ import static com.yandex.practicum.filmorate.utils.Validator.validateUser;
 
 @Component
 @Slf4j
-public class InMemoryUserStorage implements UserStorage {
+public class InMemoryUserStorageImpl implements UserStorage {
     private HashMap<Integer, User> users = new HashMap<>();
     private Integer identificator = 0;
 

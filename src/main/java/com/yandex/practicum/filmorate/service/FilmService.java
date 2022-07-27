@@ -3,7 +3,7 @@ package com.yandex.practicum.filmorate.service;
 import com.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import com.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import com.yandex.practicum.filmorate.model.Film;
-import com.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+import com.yandex.practicum.filmorate.storage.InMemoryFilmStorageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.List;
 
 @Service
 public class FilmService {
-    private final InMemoryFilmStorage inMemoryFilmStorage;
+    private final InMemoryFilmStorageImpl inMemoryFilmStorage;
 
     @Autowired
-    public FilmService(InMemoryFilmStorage inMemoryFilmStorage) {
+    public FilmService(InMemoryFilmStorageImpl inMemoryFilmStorage) {
         this.inMemoryFilmStorage = inMemoryFilmStorage;
     }
 

@@ -13,7 +13,7 @@ import static com.yandex.practicum.filmorate.utils.Validator.validateFilm;
 
 @Component
 @Slf4j
-public class InMemoryFilmStorage implements FilmStorage {
+public class InMemoryFilmStorageImpl implements FilmStorage {
     private HashMap<Integer, Film> films = new HashMap<>();
     private Integer identificator = 0;
 

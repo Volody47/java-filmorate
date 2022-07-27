@@ -2,8 +2,7 @@ package com.yandex.practicum.filmorate.service;
 
 import com.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import com.yandex.practicum.filmorate.model.User;
-import com.yandex.practicum.filmorate.storage.InMemoryUserStorage;
-import lombok.extern.slf4j.Slf4j;
+import com.yandex.practicum.filmorate.storage.InMemoryUserStorageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +10,10 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final InMemoryUserStorage userStorage;
+    private final InMemoryUserStorageImpl userStorage;
 
     @Autowired
-    public UserService(InMemoryUserStorage userStorage) {
+    public UserService(InMemoryUserStorageImpl userStorage) {
         this.userStorage = userStorage;
     }
 
