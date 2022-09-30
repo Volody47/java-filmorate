@@ -165,7 +165,9 @@ public class FilmDbStorageImpl implements FilmStorage {
         if (filmRows.next()) {
             String sqlQuery = "select *" +
                     " from FILMS as f" +
-                    " RIGHT JOIN MPA_RATINGS as mp ON f.MPA_ID = mp.MPA_ID";
+                    " LEFT JOIN MPA_RATINGS as mp ON f.MPA_ID = mp.MPA_ID" +
+                    " LEFT JOIN FILMS_GENDER as fg ON f.FILM_ID = fg.FILM_ID" +
+                    " LEFT JOIN GENRES as g ON fg.GENRE_ID = g.GENRE_ID";
             films = jdbcTemplate.query(sqlQuery, this::mapRowToFilm);
         }
         return films;
