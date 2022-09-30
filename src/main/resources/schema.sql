@@ -3,12 +3,13 @@ CREATE TABLE IF NOT EXISTS users (
     user_full_name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
     user_birthday DATE,
-    user_login VARCHAR(10) NOT NULL
+    user_login VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS films (
                                      film_id INTEGER PRIMARY KEY AUTO_INCREMENT,
                                      film_name VARCHAR(255) NOT NULL,
+                                     film_description VARCHAR(255) NOT NULL,
                                      film_release_date DATE,
                                      film_duration INTEGER NOT NULL,
                                      mpa_id int not null,
@@ -25,14 +26,14 @@ CREATE TABLE IF NOT EXISTS films_like (
 CREATE TABLE IF NOT EXISTS friends (
                                           user_id int not null,
                                           friend_id int not null,
-                                          request_status int not null,
+                                          request_status int,
                                           friend_relationship_status boolean,
                                           foreign key (user_id) references users(user_id)
 );
 
 CREATE TABLE IF NOT EXISTS genres (
                                       genre_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-                                      code VARCHAR(255) NOT NULL
+                                      genre_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS films_gender (
