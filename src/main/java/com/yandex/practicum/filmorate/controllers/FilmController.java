@@ -1,9 +1,9 @@
 package com.yandex.practicum.filmorate.controllers;
 
 import com.yandex.practicum.filmorate.model.Film;
-import com.yandex.practicum.filmorate.model.User;
+import com.yandex.practicum.filmorate.model.Genre;
+import com.yandex.practicum.filmorate.model.Mpa;
 import com.yandex.practicum.filmorate.service.FilmService;
-import com.yandex.practicum.filmorate.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,6 @@ public class FilmController {
 
     @GetMapping("/films")
     public List<Film> findAll() {
-        log.debug("Films quantity: {}", filmService.findAll().size());
         return filmService.findAll();
     }
 
@@ -56,5 +55,25 @@ public class FilmController {
     @GetMapping(value = "/films/popular")
     public List<Film> getMostPopularFilms(@RequestParam(defaultValue = "10", required = false) Integer count) {
         return filmService.getMostPopularFilms(count);
+    }
+
+    @GetMapping(value = "/genres")
+    public List<Genre> getAllGenres() {
+        return filmService.findAllGenres();
+    }
+
+    @GetMapping(value = "/genres/{id}")
+    public Genre getGenre(@PathVariable int id) {
+        return filmService.getGenre(id);
+    }
+
+    @GetMapping(value = "/mpa")
+    public List<Mpa> getAllMpa() {
+        return filmService.findAllMpa();
+    }
+
+    @GetMapping(value = "/mpa/{id}")
+    public Mpa getMpa(@PathVariable int id) {
+        return filmService.getMpa(id);
     }
 }
