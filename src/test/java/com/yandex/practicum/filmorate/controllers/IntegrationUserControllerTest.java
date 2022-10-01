@@ -1,8 +1,6 @@
 package com.yandex.practicum.filmorate.controllers;
 
-import com.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import com.yandex.practicum.filmorate.model.User;
-import com.yandex.practicum.filmorate.service.UserService;
 import com.yandex.practicum.filmorate.storage.UserDbStorageImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,14 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 
 
@@ -27,10 +22,6 @@ import static org.mockito.Mockito.mock;
 public class IntegrationUserControllerTest {
     private final UserDbStorageImpl userStorage;
 
-//    @Autowired
-//    public IntegrationUserControllerTest(UserDbStorageImpl userStorage) {
-//        this.userStorage = userStorage;
-//    }
 
     @BeforeEach
     public void setUp() {
@@ -62,7 +53,6 @@ public class IntegrationUserControllerTest {
                 "new_user_name", LocalDate.now());
         userStorage.createUser(user);
 
-        //assertEquals(2, user.getId());
         assertEquals("new_user_name", user.getName());
     }
 
