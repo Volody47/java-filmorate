@@ -100,7 +100,7 @@ public class UserDbStorageImpl implements UserStorage {
             String login = userRows.getString("USER_LOGIN");
             String name = userRows.getString("USER_FULL_NAME");
             LocalDate birthday = userRows.getDate("USER_BIRTHDAY").toLocalDate();
-            //log.info("User found: {} {}", user.getId(), user.getName());
+
             return new User(user_id, email, login, name, birthday);
         } else {
             log.info("User with id= {} haven't found.", id);
