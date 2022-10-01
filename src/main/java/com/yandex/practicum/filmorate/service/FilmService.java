@@ -66,7 +66,7 @@ public class FilmService {
 
     public void removeLike(Integer filmId, Integer userId) {
         Film film = filmStorage.getFilm(filmId);
-        Film user = filmStorage.getFilm(userId);
+        User user = userStorage.getUser(userId);
         if (film == null) {
             throw new FilmNotFoundException("Film with id=" + filmId + " not found.");
         } else if (user == null) {

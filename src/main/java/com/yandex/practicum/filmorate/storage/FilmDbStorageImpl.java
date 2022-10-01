@@ -213,7 +213,7 @@ public class FilmDbStorageImpl implements FilmStorage {
                 , film.getId());
     }
 
-    public void removeLike(Film film, Film user) {
+    public void removeLike(Film film, User user) {
         String sqlQuery = "delete from FILMS_LIKE where USER_ID = ? and FILM_ID = ?";
         boolean deleted = jdbcTemplate.update(sqlQuery, user.getId(), film.getId()) > 0;
         if (deleted) {
